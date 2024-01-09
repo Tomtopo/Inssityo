@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     [SerializeField] private float groundDrag;
+    [SerializeField] private float wallDrag;
+    [SerializeField] private float wallCheckRadius;
 
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _jumpCooldown;
@@ -18,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private float _playerHeight;
     public LayerMask ground;
+    public LayerMask wall;
     bool _grounded;
+    bool _walled;
 
     [SerializeField] private Transform orientation;
 
@@ -35,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
         _rb.freezeRotation = true;
     }
 
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(transform.position, wallCheckRadius);
+    //}
+
     private void FixedUpdate()
     {
         MovePlayer();
@@ -44,11 +53,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb.AddForce(Vector3.down * _gravity, ForceMode.Force);
         _grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.2f, ground);
+        //RaycastHit hit;
+        //_walled = Physics.SphereCast(transform.position, wallCheckRadius, Vector3.up, out hit, wallCheckRadius, wall);
+        //Debug.Log(hit.collider);
 
         SpeedControl();
 
         if (_grounded)
             _rb.drag = groundDrag;
+        else if (_walled)
+            _rb.drag = wallDrag;
         else
             _rb.drag = 0f;
     }
@@ -97,5 +111,27 @@ public class PlayerMovement : MonoBehaviour
     {
         _horizontalInput = movementInput.x;
         _verticalInput = movementInput.y;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            _walled = true;
+            _rb.drag = wallDrag;
+        }
+        else
+            _walled = false;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            _walled = true;
+            _rb.drag = wallDrag;
+        }
+        else
+            _walled = false;
     }
 }
