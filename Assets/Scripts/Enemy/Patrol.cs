@@ -38,7 +38,7 @@ public class Patrol : Node
                 _currentIndex++;
         }
 
-
+        state = NodeState.RUNNING;
         return state;
     }
 

@@ -222,7 +222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118076183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 4.03}
+  m_LocalPosition: {x: 16.12, y: 1, z: 14.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -889,8 +889,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c093e0906c00441b2199560c5b833d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 15
-  sensY: 15
+  sensX: 7
+  sensY: 7
   _mouseDelta: {x: 0, y: 0}
   orientation: {fileID: 635047638}
 --- !u!81 &850932808
@@ -1078,6 +1078,13 @@ MonoBehaviour:
   - {fileID: 96699389}
   - {fileID: 1254352364}
   - {fileID: 2048735265}
+  player: {fileID: 118076183}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1220213394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,7 +1443,7 @@ GameObject:
   - component: {fileID: 1664020220}
   - component: {fileID: 1664020219}
   - component: {fileID: 1664020218}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
