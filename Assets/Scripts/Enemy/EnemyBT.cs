@@ -13,6 +13,7 @@ public class EnemyBT : Tree
 
     public static float speed = 4f;
     public static float reach = 10f;
+    public static float attackRange = 2f;
 
     protected override Node SetupTree()
     {
@@ -20,11 +21,16 @@ public class EnemyBT : Tree
         {
             new Sequence(new List<Node>
             {
+                new CheckPlayerInAttackRange(transform),
+                new HitTarget(transform, player, player.GetComponent<PlayerHealth>()),
+            }),
+            new Sequence(new List<Node>
+            {
                 new CheckPlayerInFOVRange(transform, player, playerMask, wallMask),
                 new GoToTarget(transform, playerMask, wallMask),
             }),
             new Patrol(transform, waypoints),
-        });
+        }) ;
 
         return root;
     }
