@@ -4,11 +4,11 @@ using UnityEngine;
 
 using BehaviourTree;
 
-public class CheckPlayerInAttackRange : Node
+public class CheckTargetInAttackRange : Node
 {
     private Transform _transform;
 
-    public CheckPlayerInAttackRange(Transform transform)
+    public CheckTargetInAttackRange(Transform transform)
     { 
         _transform = transform;
     }

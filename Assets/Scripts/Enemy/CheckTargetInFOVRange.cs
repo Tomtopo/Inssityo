@@ -5,7 +5,7 @@ using BehaviourTree;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CheckPlayerInFOVRange : Node
+public class CheckTargetInFOVRange : Node
 {
     private Transform _transform;
 
@@ -18,7 +18,7 @@ public class CheckPlayerInFOVRange : Node
     //bool _isHitWall;
 
     private float _fovRange = 90f;
-    public CheckPlayerInFOVRange(Transform transform, GameObject player, LayerMask playerMask, LayerMask wallMask) 
+    public CheckTargetInFOVRange(Transform transform, GameObject player, LayerMask playerMask, LayerMask wallMask) 
     { 
         _transform = transform;
         _player = player;
