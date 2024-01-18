@@ -8,6 +8,8 @@ public class EnemyGizmos : MonoBehaviour
 {
     public GameObject player;
 
+    [SerializeField]private EnemyBT _enemyBT;
+
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _wallMask;
 
@@ -46,5 +48,12 @@ public class EnemyGizmos : MonoBehaviour
                 Gizmos.DrawLine(transform.position, player.transform.position);
             }
         }
+    }
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 400, 20), "Number of possible waypoints: " + EnemyBT.visibleWaypoints.Count);
+        GUI.Label(new Rect(10, 20, 400, 20), "Last waypoint visited: " + EnemyBT.lastWaypointVisited);
+        GUI.Label(new Rect(10, 30, 400, 20), "Current waypoint: " + EnemyBT.currentWaypoint);
     }
 }

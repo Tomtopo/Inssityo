@@ -5,7 +5,8 @@ using BehaviourTree;
 
 public class EnemyBT : Tree
 {
-    public UnityEngine.Transform[] waypoints;
+    public UnityEngine.Transform waypointParent;
+    public List<UnityEngine.Transform> waypoints = new List<UnityEngine.Transform>();
     public UnityEngine.GameObject player;
 
     public UnityEngine.LayerMask playerMask;
@@ -14,14 +15,20 @@ public class EnemyBT : Tree
 
     public static float speed = 4f;
     public static float reach = 10f;
-    public static float waypointReach = 20f;
+    public static float waypointReach = 30f;
     public static float attackRange = 2f;
     public static int randomWaypointIndex = 0;
+    public static UnityEngine.Transform lastWaypointVisited;
+    public static UnityEngine.Transform currentWaypoint;
     public static List<UnityEngine.Transform> possibleWaypoints = new List<UnityEngine.Transform>();
     public static List<UnityEngine.Transform> visibleWaypoints = new List<UnityEngine.Transform>();
 
     protected override Node SetupTree()
     {
+        foreach(UnityEngine.Transform child in waypointParent)
+        {
+            waypoints.Add(child);
+        }
         Node root = new Selector(new List<Node>
         {
             new Sequence(new List<Node>

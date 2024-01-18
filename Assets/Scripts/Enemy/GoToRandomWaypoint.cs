@@ -17,7 +17,6 @@ public class GoToRandomWaypoint : Node
 
     public override NodeState Evaluate()
     {
-        
         if (Vector3.Distance(_transform.position, _visibleWaypoints[EnemyBT.randomWaypointIndex].position) > 0.1f)
         {
             _transform.position = Vector3.MoveTowards(_transform.position, _visibleWaypoints[EnemyBT.randomWaypointIndex].position, EnemyBT.speed * Time.deltaTime);
@@ -28,6 +27,8 @@ public class GoToRandomWaypoint : Node
         }
         else
         {
+            EnemyBT.lastWaypointVisited = EnemyBT.currentWaypoint;
+            EnemyBT.currentWaypoint = EnemyBT.visibleWaypoints[EnemyBT.randomWaypointIndex];
             EnemyBT.possibleWaypoints.Clear();
             EnemyBT.visibleWaypoints.Clear();
         }

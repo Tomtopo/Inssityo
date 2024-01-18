@@ -8,9 +8,9 @@ public class CheckWaypointsInRange : Node
 {
 
     private Transform _transform;
-    private Transform[] _waypoints;
+    private List<Transform> _waypoints = new List<Transform>();
 
-    public CheckWaypointsInRange(Transform transform, Transform[] waypoints)
+    public CheckWaypointsInRange(Transform transform, List<Transform> waypoints)
     {
         _transform = transform;
         _waypoints = waypoints;
@@ -22,7 +22,7 @@ public class CheckWaypointsInRange : Node
         if(EnemyBT.possibleWaypoints.Count == 0 || t == null)
         {
             EnemyBT.possibleWaypoints.Clear();
-            for (int i = 0; i < _waypoints.Length; i++)
+            for (int i = 0; i < _waypoints.Count; i++)
             {
                 if (Vector3.Distance(_transform.position, _waypoints[i].position) < EnemyBT.waypointReach)
                 {

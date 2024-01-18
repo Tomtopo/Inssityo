@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using BehaviourTree;
+using Unity.VisualScripting;
 
 public class PickVisibleWaypoints : Node
 {
@@ -28,13 +29,17 @@ public class PickVisibleWaypoints : Node
             {
                 bool isHitWaypoint = Physics.Linecast(_transform.position, _possibleWaypoints[i].position, _waypointMask);
                 bool isHitWall = Physics.Linecast(_transform.position, _possibleWaypoints[i].position, _wallMask);
-                if (isHitWaypoint && !isHitWall)
+                if (isHitWaypoint && !isHitWall && EnemyBT.possibleWaypoints[i] != EnemyBT.lastWaypointVisited)
                 {
                     EnemyBT.visibleWaypoints.Add(_possibleWaypoints[i]);
                 }
             }
+            if(EnemyBT.visibleWaypoints.Count == 0)
+            {
+                EnemyBT.visibleWaypoints.Add(EnemyBT.lastWaypointVisited);
+            }
             EnemyBT.randomWaypointIndex = Random.Range(0, EnemyBT.visibleWaypoints.Count);
-        }
+}
 
         if (EnemyBT.visibleWaypoints.Count > 0)
         {
