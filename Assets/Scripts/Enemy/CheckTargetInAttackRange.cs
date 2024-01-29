@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using BehaviourTree;
+using UnityEngine.AI;
 
 public class CheckTargetInAttackRange : Node
 {
     private Transform _transform;
 
-    public CheckTargetInAttackRange(Transform transform)
+    private NavMeshAgent _agent;
+
+    public CheckTargetInAttackRange(Transform transform, NavMeshAgent agent)
     { 
         _transform = transform;
+        _agent = agent;
     }
 
     public override NodeState Evaluate()
@@ -23,6 +27,9 @@ public class CheckTargetInAttackRange : Node
         }
         if(Vector3.Distance(_transform.position, target.position) < EnemyBT.attackRange)
         {
+            _agent.ResetPath();
+            EnemyBT.attacking = true;
+            EnemyBT.attackRange = Mathf.Infinity;
             state = NodeState.SUCCESS;
             return state;
         }

@@ -48,6 +48,10 @@ public class EnemyGizmos : MonoBehaviour
                 Gizmos.DrawLine(transform.position, player.transform.position);
             }
         }
+        Gizmos.color = Color.red;
+        Matrix4x4 rotationMatrix = transform.localToWorldMatrix;
+        Gizmos.matrix = rotationMatrix;
+        Gizmos.DrawWireCube(new Vector3(0f, 0f, 1f), new Vector3(1f, 1f, 1f));
     }
 
     private void OnGUI()

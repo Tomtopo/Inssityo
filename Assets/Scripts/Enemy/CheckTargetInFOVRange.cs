@@ -26,19 +26,6 @@ public class CheckTargetInFOVRange : Node
         _wallMask = wallMask;
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawLine(_transform.position, _transform.forward * EnemyBT.reach);
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawLine(_transform.position, (_transform.position + _player.transform.position).normalized * EnemyBT.reach);
-    //    if(_isHitPlayer && !_isHitWall)
-    //    {
-    //        Gizmos.color = Color.green;
-    //        Gizmos.DrawLine(_transform.position, (_transform.position + _player.transform.position).normalized * EnemyBT.reach);
-    //    }
-    //}
-
     public override NodeState Evaluate()
     {
         object t = GetData("target");
@@ -57,7 +44,6 @@ public class CheckTargetInFOVRange : Node
 
                 if (isHitPlayer && !isHitWall)
                 {
-                    Debug.Log("näkee");
                     parent.parent.SetData("target", _player.transform);
                     state = NodeState.SUCCESS;
                     return state;
