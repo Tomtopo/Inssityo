@@ -13,6 +13,10 @@ public class GoToRandomWaypoint : Node
 
     private NavMeshAgent _agent;
 
+    private bool _waiting = false;
+    private float _counter = 0f;
+    private float _waitTime = 2f;
+
 
     public GoToRandomWaypoint(Transform transform, NavMeshAgent agent, List<Transform> waypoints)
     {
@@ -24,17 +28,36 @@ public class GoToRandomWaypoint : Node
     public override NodeState Evaluate()
     {
         Transform target = (Transform)GetData("target");
-        if (!_agent.hasPath)
+        //_agent.updatePosition = true;
+        //_transform.position = _agent.nextPosition;
+        //_agent.updatePosition = false;
+        if (_agent.remainingDistance < 0.1f && _agent.hasPath)
         {
-            int destinationIndex = Random.Range(0, _waypoints.Count);
-            _agent.SetDestination(_waypoints[destinationIndex].position);
-            state = NodeState.RUNNING;
+            EnemyBT.isLookingLeftAndRight = true;
+        }
+        if (EnemyBT.isLookingLeftAndRight)
+        {
+            //_counter += Time.deltaTime;
+            //if(_counter >= _waitTime)
+            //{
+            //    _counter = 0f;
+            //    _waiting = false;
+            //    state = NodeState.SUCCESS;
+            //    return state;
+            //}
+
+            state = NodeState.SUCCESS;
             return state;
         }
+        if (!_agent.hasPath && !EnemyBT.isLookingLeftAndRight)
+        {
+            //_agent.updatePosition = false;
+            int destinationIndex = Random.Range(0, _waypoints.Count);
+            _agent.SetDestination(_waypoints[destinationIndex].position);
+        }
 
-        state = NodeState.RUNNING;
+        state = NodeState.FAILURE;
         return state;
-
     }
 
 

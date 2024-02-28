@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private GameObject _playerObject;
+
     [Header("Movement")]
-    [SerializeField] private float moveSpeed;
+    private float _moveSpeed;
+    [SerializeField] private float _crouchMoveSpeed = 5f;
+    [SerializeField] private float _walkMoveSpeed = 10f;
 
     [SerializeField] private float groundDrag;
     [SerializeField] private float wallDrag;
@@ -24,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     bool _grounded;
     bool _walled;
 
+    public bool isCrouching = false;
+
     [SerializeField] private Transform orientation;
 
     float _horizontalInput;
@@ -37,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true;
+        _playerObject = transform.GetChild(0).gameObject;
+        _moveSpeed = _walkMoveSpeed;
     }
 
     //private void OnDrawGizmos()
@@ -72,18 +80,18 @@ public class PlayerMovement : MonoBehaviour
         _moveDirection = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
 
         if(_grounded)
-            _rb.AddForce(_moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f, ForceMode.Force);
         else if(!_grounded)
-            _rb.AddForce(_moveDirection.normalized * moveSpeed * 10f * _airMultiplier, ForceMode.Force);
+            _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f * _airMultiplier, ForceMode.Force);
     }
 
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
 
-        if(flatVel.magnitude > moveSpeed)
+        if(flatVel.magnitude > _moveSpeed)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            Vector3 limitedVel = flatVel.normalized * _moveSpeed;
             _rb.velocity = new Vector3(limitedVel.x, _rb.velocity.y, limitedVel.z);
         }
     }
@@ -101,6 +109,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    public void OnCrouchPressed()
+    {
+        isCrouching = true;
+        _moveSpeed = _crouchMoveSpeed;
+        _playerObject.GetComponent<CapsuleCollider>().height = 1f;
+    }
+
+    public void OnCrouchReleased()
+    {
+        isCrouching = false;
+        _moveSpeed = _walkMoveSpeed;
+        _playerObject.GetComponent<CapsuleCollider>().height = 2f;
+    }
+
 
     private void ResetJump()
     {

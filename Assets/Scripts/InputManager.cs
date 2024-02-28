@@ -30,6 +30,9 @@ public class InputManager : MonoBehaviour
 
         groundMovement.Jump.performed += _ => _movement.OnJumpPressed();
 
+        groundMovement.Crouch.performed += _ => _movement.OnCrouchPressed();
+        groundMovement.Crouch.canceled += _ => _movement.OnCrouchReleased();
+
         groundMovement.MouseLook.performed += ctx => mouseDeltaInput = ctx.ReadValue<Vector2>();
 
     }

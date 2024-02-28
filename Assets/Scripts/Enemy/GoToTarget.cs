@@ -15,6 +15,8 @@ public class GoToTarget : Node
     private LayerMask _playerMask;
     private LayerMask _wallMask;
 
+    private float _counter = 0f;
+
     public GoToTarget(Transform transform, NavMeshAgent agent, LayerMask playerMask, LayerMask wallMask)
     {
         _transform = transform;
@@ -30,15 +32,17 @@ public class GoToTarget : Node
         bool isHitPlayer = Physics.Linecast(_transform.position, target.position, _playerMask);
         bool isHitWall = Physics.Linecast(_transform.position, target.position, _wallMask);
 
-        if (Vector3.Distance(_transform.position, target.position) < EnemyBT.reach && isHitPlayer && !isHitWall)
+        if (isHitPlayer && !isHitWall)
         {
             _agent.SetDestination(target.position);
 
         }
         else
         {
-            _agent.ResetPath();
-            ClearData("target");
+            _counter += Time.deltaTime;
+            _agent.SetDestination(target.position);
+            if(_counter >= 1f)
+                ClearData("target");
         }
 
         state = NodeState.RUNNING;

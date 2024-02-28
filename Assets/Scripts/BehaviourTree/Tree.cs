@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BehaviourTree
@@ -20,6 +21,18 @@ namespace BehaviourTree
         }
 
         protected abstract Node SetupTree();
+
+        public Node GetRoot()
+        {
+            return _root;
+        }
+
+        //private void OnGUI()
+        //{
+        //    GUI.Label(new Rect(10, 40, 400, 20), "Current state: " + _root.);
+        //}
     }
+
+
 }
 

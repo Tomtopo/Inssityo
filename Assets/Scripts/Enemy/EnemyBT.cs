@@ -16,9 +16,11 @@ public class EnemyBT : Tree
     public UnityEngine.LayerMask waypointsMask;
 
     public static bool attacking = false;
+    public static bool isWaiting = false;
+    public static bool isLookingLeftAndRight = false;
 
     public static float speed = 4f;
-    public static float reach = 10f;
+    public static float sightReach = 10f;
     public static float waypointReach = 30f;
     public static float attackRange = 2f;
     public static int randomWaypointIndex = 0;
@@ -38,20 +40,24 @@ public class EnemyBT : Tree
             new Sequence(new List<Node>
             {
                 new CheckTargetInAttackRange(transform, agent),
-                new HitTarget(transform, player, player.GetComponent<PlayerHealth>(), playerMask),          
+                new HitTarget(transform, player, player.GetComponent<PlayerHealth>(), playerMask),
             }),
             new Sequence(new List<Node>
             {
-                new CheckTargetInFOVRange(transform, player, playerMask, wallMask),
+                new Selector(new List<Node>
+                {
+                    new CheckTargetInFOVRange(transform, player, playerMask, wallMask),
+                    new CheckIfTargetMakingNoise(transform, player, agent, playerMask, wallMask),
+                }),
                 new GoToTarget(transform, agent, playerMask, wallMask),
             }),
             new Sequence(new List<Node>
             {
-                //new CheckWaypointsInRange(transform, waypoints),
-                //new PickVisibleWaypoints(transform, possibleWaypoints, waypointsMask, wallMask),
                 new GoToRandomWaypoint(transform, agent, waypoints),
+                new LookLeftAndRight(transform),
             }),
-        }) ;
+
+        });
 
         return root;
     }

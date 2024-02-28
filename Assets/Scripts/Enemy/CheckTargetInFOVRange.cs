@@ -28,23 +28,23 @@ public class CheckTargetInFOVRange : Node
 
     public override NodeState Evaluate()
     {
-        object t = GetData("target");
+        Transform target = (Transform)GetData("target");
 
-        if (t == null)
+        if (target == null)
         {
             Vector3 forwardVector = _transform.forward;
             Vector3 vectorToPlayer = _player.transform.position - _transform.position;
             float angle = Vector3.Angle(forwardVector, vectorToPlayer);
             float distanceFromCenter = Vector3.Distance(forwardVector, vectorToPlayer);
             //Debug.Log(angle);
-            if (angle < _fovRange / 2 && Vector3.Distance(_transform.position, _player.transform.position) < EnemyBT.reach)
+            if (angle < _fovRange / 2 && Vector3.Distance(_transform.position, _player.transform.position) < EnemyBT.sightReach)
             {
                 bool isHitPlayer = Physics.Linecast(_transform.position, _player.transform.position, _playerMask);
                 bool isHitWall = Physics.Linecast(_transform.position, _player.transform.position, _wallMask);
 
                 if (isHitPlayer && !isHitWall)
                 {
-                    parent.parent.SetData("target", _player.transform);
+                    parent.parent.parent.SetData("target", _player.transform);
                     state = NodeState.SUCCESS;
                     return state;
                 }
