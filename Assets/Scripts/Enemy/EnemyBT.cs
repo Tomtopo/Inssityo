@@ -14,12 +14,14 @@ public class EnemyBT : Tree
     public UnityEngine.LayerMask playerMask;
     public UnityEngine.LayerMask wallMask;
     public UnityEngine.LayerMask waypointsMask;
+    public UnityEngine.LayerMask doorMask;
 
     public static bool attacking = false;
     public static bool isWaiting = false;
     public static bool isLookingLeftAndRight = false;
 
     public static float speed = 4f;
+    public static float bargePower = 15f;
     public static float sightReach = 10f;
     public static float waypointReach = 30f;
     public static float attackRange = 2f;
@@ -54,7 +56,33 @@ public class EnemyBT : Tree
             new Sequence(new List<Node>
             {
                 new GoToRandomWaypoint(transform, agent, waypoints),
-                new LookLeftAndRight(transform),
+                new IsDoorInRange(transform,agent, doorMask),
+                new Selector(new List<Node>
+                {
+                    new Sequence(new List<Node>
+                    {
+                        new IsDoorOpen(transform, doorMask),
+                        new MoveIntoRoom(agent),
+                    }),
+                    new Sequence(new List<Node>
+                    {
+                        new NonDeterministicSelector(new List<Node>
+                        {
+                            new Sequence(new List<Node>
+                            {
+                                new IsDoorLocked(transform, agent, doorMask),
+                                new OpenDoor(transform, agent, doorMask),
+                            }),
+                            new Sequence(new List<Node>
+                            {
+                                new BargeDoor(transform, agent, doorMask, bargePower),
+                                new IsDoorOpen(transform, doorMask),
+                            }),
+                        }),
+                        new MoveIntoRoom(agent),
+                    }),
+                    new CalculateNewPath(transform, agent, waypoints),
+                }),
             }),
 
         });

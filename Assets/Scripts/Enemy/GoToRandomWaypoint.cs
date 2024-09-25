@@ -25,38 +25,52 @@ public class GoToRandomWaypoint : Node
         _waypoints = waypoints;
     }
 
+    //public override NodeState Evaluate()
+    //{
+    //    Transform target = (Transform)GetData("target");
+    //    //_agent.updatePosition = true;
+    //    //_transform.position = _agent.nextPosition;
+    //    //_agent.updatePosition = false;
+    //    if (_agent.remainingDistance < 0.1f && _agent.hasPath)
+    //    {
+    //        EnemyBT.isLookingLeftAndRight = true;
+    //    }
+    //    if (EnemyBT.isLookingLeftAndRight)
+    //    {
+    //        state = NodeState.SUCCESS;
+    //        return state;
+    //    }
+    //    if (!_agent.hasPath && !EnemyBT.isLookingLeftAndRight)
+    //    {
+    //        //_agent.updatePosition = false;
+    //        int destinationIndex = Random.Range(0, _waypoints.Count);
+    //        _agent.SetDestination(_waypoints[destinationIndex].position);
+    //    }
+
+    //    state = NodeState.FAILURE;
+    //    return state;
+    //}
+
     public override NodeState Evaluate()
     {
+        Debug.Log(_agent.hasPath);
         Transform target = (Transform)GetData("target");
         //_agent.updatePosition = true;
         //_transform.position = _agent.nextPosition;
         //_agent.updatePosition = false;
         if (_agent.remainingDistance < 0.1f && _agent.hasPath)
         {
-            EnemyBT.isLookingLeftAndRight = true;
+            _agent.ResetPath();
         }
-        if (EnemyBT.isLookingLeftAndRight)
-        {
-            //_counter += Time.deltaTime;
-            //if(_counter >= _waitTime)
-            //{
-            //    _counter = 0f;
-            //    _waiting = false;
-            //    state = NodeState.SUCCESS;
-            //    return state;
-            //}
 
-            state = NodeState.SUCCESS;
-            return state;
-        }
-        if (!_agent.hasPath && !EnemyBT.isLookingLeftAndRight)
+        if (!_agent.hasPath /*&& !EnemyBT.isLookingLeftAndRight*/)
         {
             //_agent.updatePosition = false;
             int destinationIndex = Random.Range(0, _waypoints.Count);
             _agent.SetDestination(_waypoints[destinationIndex].position);
         }
 
-        state = NodeState.FAILURE;
+        state = NodeState.SUCCESS;
         return state;
     }
 

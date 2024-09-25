@@ -9,9 +9,11 @@ public class InputManager : MonoBehaviour
     //[SerializeField] MouseLook _mouseLook;
     [SerializeField] PlayerCamera _playerCamera;
     [SerializeField] PlayerMovement _movement;
+    [SerializeField] PlayerInteraction _interaction;
 
     PlayerControls controls;
     PlayerControls.GroundMovementActions groundMovement;
+    PlayerControls.InteractionActions interactionActions;
 
     Vector2 movementInput;
     Vector2 mouseDeltaInput;
@@ -25,6 +27,7 @@ public class InputManager : MonoBehaviour
     {    
         OnEnable();
         groundMovement = controls.GroundMovement;
+        interactionActions = controls.Interaction;
 
         groundMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
 
@@ -35,12 +38,15 @@ public class InputManager : MonoBehaviour
 
         groundMovement.MouseLook.performed += ctx => mouseDeltaInput = ctx.ReadValue<Vector2>();
 
+        interactionActions.Interaction.performed += _ => _interaction.OnInteraction();
+
     }
 
     private void Update()
     {
         _movement.ReceiveInput(movementInput);
         _playerCamera.ReceiveInput(mouseDeltaInput);
+
     }
 
     private void OnEnable()
