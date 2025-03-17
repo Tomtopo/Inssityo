@@ -52,7 +52,6 @@ public class HitTarget : Node
             Collider[] hit = Physics.OverlapBox(_transform.position + _transform.forward * 1f, new Vector3(0.8f, 0.8f, 0.8f), q, _playerMask);
             if (hit.Length == 1)
             {
-                //Debug.Log(hit[0].transform);
                 Debug.Log("ouch");
                 _playerHealth.TakeDamage(1);
                 _player.GetComponent<Rigidbody>().AddForce((target.transform.position - _transform.position).normalized * 10f, ForceMode.Impulse);

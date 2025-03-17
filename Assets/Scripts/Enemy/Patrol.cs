@@ -19,7 +19,6 @@ public class Patrol : Node
         _waypoints = waypoints;
     }
 
-
     public override NodeState Evaluate()
     {
         if (Vector3.Distance(_transform.position, _waypoints[_currentIndex].position) > 0.1f)
@@ -30,7 +29,6 @@ public class Patrol : Node
             Vector3 newDirection = Vector3.RotateTowards(_transform.forward, targetDirection, singleStep, 0.0f);
             _transform.rotation = Quaternion.LookRotation(newDirection);
         }
-
         else
         {
             if (_currentIndex == _waypoints.Length - 1)
@@ -42,29 +40,4 @@ public class Patrol : Node
         state = NodeState.RUNNING;
         return state;
     }
-
-    //public override NodeState Evaluate()
-    //{
-    //    if (Vector3.Distance(_transform.position, _waypoints[_currentIndex].position) > 0.1f)
-    //    {
-    //        _transform.position = Vector3.MoveTowards(_transform.position, _waypoints[_currentIndex].position, EnemyBT.speed * Time.deltaTime);
-    //        Vector3 targetDirection = _waypoints[_currentIndex].position - _transform.position;
-    //        float singleStep = EnemyBT.speed * Time.deltaTime;
-    //        Vector3 newDirection = Vector3.RotateTowards(_transform.forward, targetDirection, singleStep, 0.0f);
-    //        _transform.rotation = Quaternion.LookRotation(newDirection);
-    //    }
-
-    //    else
-    //    {
-    //        if (_currentIndex == _waypoints.Length - 1)
-    //            _currentIndex = 0;
-    //        else
-    //            _currentIndex++;
-    //    }
-
-    //    state = NodeState.RUNNING;
-    //    return state;
-    //}
-
-
 }

@@ -47,11 +47,6 @@ public class PlayerMovement : MonoBehaviour
         _moveSpeed = _walkMoveSpeed;
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawSphere(transform.position, wallCheckRadius);
-    //}
-
     private void FixedUpdate()
     {
         MovePlayer();
@@ -61,9 +56,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb.AddForce(Vector3.down * _gravity, ForceMode.Force);
         _grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.2f, ground);
-        //RaycastHit hit;
-        //_walled = Physics.SphereCast(transform.position, wallCheckRadius, Vector3.up, out hit, wallCheckRadius, wall);
-        //Debug.Log(hit.collider);
 
         SpeedControl();
 

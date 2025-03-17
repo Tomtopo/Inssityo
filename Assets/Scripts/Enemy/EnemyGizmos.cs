@@ -26,7 +26,7 @@ public class EnemyGizmos : MonoBehaviour
         Vector3 forwardVector = transform.forward;
         Vector3 vectorToPlayer = player.transform.position - transform.position;
         float angle = Vector3.Angle(forwardVector, vectorToPlayer);
-        //Debug.Log(angle);
+
         if (angle < _fovRange / 2 && Vector3.Distance(transform.position, player.transform.position) < EnemyBT.sightReach)
         {
             bool isHitPlayer = Physics.Linecast(transform.position, player.transform.position, _playerMask);
@@ -41,7 +41,7 @@ public class EnemyGizmos : MonoBehaviour
         Gizmos.color = Color.red;
         Matrix4x4 rotationMatrix = transform.localToWorldMatrix;
         Gizmos.matrix = rotationMatrix;
-        Gizmos.DrawWireCube(new Vector3(0f, 0f, 1f), new Vector3(1.6f, 1.6f, 1.6f));
+        Gizmos.DrawWireCube(new Vector3(0f, 0f, 1f), new Vector3(0.8f, 0.8f, 0.8f));
     }
 
     private void OnGUI()

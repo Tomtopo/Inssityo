@@ -16,7 +16,6 @@ public class MouseLook : MonoBehaviour
         _originalRotation = transform.rotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Debug.Log(_playerCamera.transform.rotation);
@@ -26,14 +25,9 @@ public class MouseLook : MonoBehaviour
         Quaternion verticalRot = Quaternion.Euler(-_mouseDelta.y, _originalRotation.y, _originalRotation.z);
         Quaternion horizontalRot = Quaternion.Euler(0f, _mouseDelta.x, 0f);
         rotation *= verticalRot;
-        //rotation.x = Mathf.Clamp(rotation.x, -0.5f, 0.5f);
-        //_playerCamera.transform.localRotation = rotation;
         _playerCamera.transform.localRotation *= verticalRot;
-        //_playerCamera.transform.Rotate(-_mouseDelta.y, 0, 0);
         transform.rotation *= horizontalRot;
     }
-
-
 
     public void ReceiveInput(Vector2 mouseDeltaInput)
     {

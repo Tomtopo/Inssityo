@@ -20,7 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(_lookDirection.position, _lookDirection.forward, out hit, _interactionDistance, _doorLayer))
+        if (Physics.Raycast(_lookDirection.position, _lookDirection.forward, out hit, _interactionDistance, _doorLayer) && !hit.transform.gameObject.GetComponent<DoorController>().doorBarged)
         {         
             GameObject.Find("UI").transform.GetChild(0).gameObject.SetActive(true);               
         }
@@ -36,7 +36,7 @@ public class PlayerInteraction : MonoBehaviour
     public void OnInteraction()
     {
         RaycastHit hit;
-        if (Physics.Raycast(_lookDirection.position, _lookDirection.forward, out hit, _interactionDistance, _doorLayer))
+        if (Physics.Raycast(_lookDirection.position, _lookDirection.forward, out hit, _interactionDistance, _doorLayer) && !hit.transform.gameObject.GetComponent<DoorController>().doorBarged)
         {
             string layer = hit.transform.gameObject.name;
 

@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    //[SerializeField] Movement movement;
-    //[SerializeField] MouseLook _mouseLook;
     [SerializeField] PlayerCamera _playerCamera;
     [SerializeField] PlayerMovement _movement;
     [SerializeField] PlayerInteraction _interaction;
@@ -39,7 +37,6 @@ public class InputManager : MonoBehaviour
         groundMovement.MouseLook.performed += ctx => mouseDeltaInput = ctx.ReadValue<Vector2>();
 
         interactionActions.Interaction.performed += _ => _interaction.OnInteraction();
-
     }
 
     private void Update()

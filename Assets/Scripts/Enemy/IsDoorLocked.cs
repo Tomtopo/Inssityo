@@ -19,18 +19,16 @@ public class IsDoorLocked : Node
 
     public override NodeState Evaluate()
     {
-        Collider[] hit = Physics.OverlapBox(_transform.position + _transform.forward * 1f, new Vector3(0.8f, 0.8f, 0.8f), Quaternion.identity, _doorMask);
+        Collider[] hit = Physics.OverlapBox(_transform.position + _transform.forward * 1f, new Vector3(0.4f, 0.4f, 0.4f), Quaternion.identity, _doorMask);
         if (hit[0].gameObject.GetComponent<DoorController>().isDoorLocked)
         {
-            Debug.Log("Door locked. Opening...");
-            hit[0].gameObject.GetComponent<DoorController>().isDoorLocked = false;
             _agent.isStopped = true;
-            state = NodeState.SUCCESS;
+            state = NodeState.FAILURE;
             return state;
         }
         else
         {
-            state = NodeState.FAILURE;
+            state = NodeState.SUCCESS;
             return state;
         }
     }

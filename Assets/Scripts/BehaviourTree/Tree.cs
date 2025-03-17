@@ -26,11 +26,6 @@ namespace BehaviourTree
         {
             return _root;
         }
-
-        //private void OnGUI()
-        //{
-        //    GUI.Label(new Rect(10, 40, 400, 20), "Current state: " + _root.);
-        //}
     }
 
 

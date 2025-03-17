@@ -21,7 +21,7 @@ public class EnemyBT : Tree
     public static bool isLookingLeftAndRight = false;
 
     public static float speed = 4f;
-    public static float bargePower = 15f;
+    public static float bargePower = 30f;
     public static float sightReach = 10f;
     public static float waypointReach = 30f;
     public static float attackRange = 2f;
@@ -57,6 +57,7 @@ public class EnemyBT : Tree
             {
                 new GoToRandomWaypoint(transform, agent, waypoints),
                 new IsDoorInRange(transform,agent, doorMask),
+                new Wait(2f, agent),
                 new Selector(new List<Node>
                 {
                     new Sequence(new List<Node>

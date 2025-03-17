@@ -21,9 +21,9 @@ public class BargeDoor : Node
 
     public override NodeState Evaluate()
     {
-        Collider[] hit = Physics.OverlapBox(_transform.position + _transform.forward * 1f, new Vector3(0.8f, 0.8f, 0.8f), Quaternion.identity, _doorMask);
+        Collider[] hit = Physics.OverlapBox(_transform.position + _transform.forward * 1f, new Vector3(0.4f, 0.4f, 0.4f), Quaternion.identity, _doorMask);
         hit[0].gameObject.GetComponent<DoorController>().BargeDoor(_transform.position, _bargePower);
-
+        
         state = NodeState.RUNNING;
         return state;
 

@@ -14,9 +14,6 @@ public class CheckTargetInFOVRange : Node
     private LayerMask _playerMask;
     private LayerMask _wallMask;
 
-    //bool _isHitPlayer;
-    //bool _isHitWall;
-
     private float _fovRange = 90f;
     public CheckTargetInFOVRange(Transform transform, GameObject player, LayerMask playerMask, LayerMask wallMask) 
     { 
@@ -36,7 +33,6 @@ public class CheckTargetInFOVRange : Node
             Vector3 vectorToPlayer = _player.transform.position - _transform.position;
             float angle = Vector3.Angle(forwardVector, vectorToPlayer);
             float distanceFromCenter = Vector3.Distance(forwardVector, vectorToPlayer);
-            //Debug.Log(angle);
             if (angle < _fovRange / 2 && Vector3.Distance(_transform.position, _player.transform.position) < EnemyBT.sightReach)
             {
                 bool isHitPlayer = Physics.Linecast(_transform.position, _player.transform.position, _playerMask);
@@ -48,14 +44,11 @@ public class CheckTargetInFOVRange : Node
                     state = NodeState.SUCCESS;
                     return state;
                 }
-
-
             }
             state = NodeState.FAILURE;
             return state;
         }
         state = NodeState.SUCCESS;
         return state;
-
     }
 }
